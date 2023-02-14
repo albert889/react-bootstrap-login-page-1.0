@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
+
+* {
+  box-sizing: border-box;
+}
+body {
+  background-image: url("/asset/img/background.jpg");  
+  min-height: 100vh;
+  display: flex;
+  font-weight: 400;
+  font-family: "Fira Sans", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+span {  
+  font-weight: 500;
+  font-family: "Fira Sans", sans-serif;
+  color: white;  
+}
+
+body,
+html,
+.App,
+#root,
+.auth-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.navbar-dark {
+  background-image: url("/asset/img/background.jpg");
+}
+
+.already-registered-padding{
+  padding: 5px 10px 10px 5px;
+}
+
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
+}
+
+.auth-inner {
+  width: 500px;
+  margin: auto;  
+  padding: 30px 40px 30px 40px;
+  border-radius: 15px;
+  transition: all 0.3s;
+}
+
+.picture-padding{
+padding: 1px 20px 20px 20px;
+}
+
+.auth-wrapper .form-control:focus {
+  border-color: #167bff;
+  box-shadow: none;
+}
+
+.captcha-padding{
+  padding: 5px 10px 10px 5px;
+}
+
+.auth-wrapper h3 {
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+  padding-bottom: 20px;
+}
+
+.custom-control-label {
+  font-weight: 400;
+}
+
+.forgot-password,
+.forgot-password a {
+  text-align: right;
+  font-size: 13px;
+  padding-top: 10px;
+  color: #7f7d7d;
+  margin: 0;
+}
+
+.forgot-password a {
+  color: #167bff;
+}
+
