@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import Login from "./components/login.component";
 import SignUp from "./components/signup.component";
+import ResetPassword from "./components/reset.password.component";
 
 const checkForInactivity = () => {
   const expireTime = localStorage.getItem("expireTime");
@@ -19,15 +20,7 @@ const updateExpireTime = () => {
   localStorage.setItem("expireTime", expireTime);
 };
 
-function App() {
-  localStorage.setItem(
-    "user",
-    JSON.stringify({
-      username: "john123",            
-      password: "123456",
-    })
-  );
-
+function App() {  
   useEffect(() => {
     const interval = setInterval(() => {
       checkForInactivity();
@@ -71,6 +64,11 @@ function App() {
                   Sign up
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/reset-password"}>
+                  Reset Password
+                </Link>
+              </li>
             </ul>
           </div>
         </nav>
@@ -81,6 +79,7 @@ function App() {
               <Route exact path="/" element={<Login />} />
               <Route path="/sign-in" element={<Login />} />
               <Route path="/sign-up" element={<SignUp />} />
+              <Route path="/reset-password" element={<ResetPassword />} />              
             </Routes>
           </div>
         </div>

@@ -1,25 +1,25 @@
 import React, { useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/firebase"
+import { auth } from "../config/firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReCAPTCHA from "react-google-recaptcha";
 
-export default function SignUp() {  
+function ResetPassword() {
   const [input, setInput] = useState({
-    email: "",    
-    password: "",
+    email: "",
   });
 
   const enableBtn = () => {
-    document.getElementById("signUpBtn").disabled = false;
+    document.getElementById("requestBtn").disabled = false;
   };
-  const handleSubmit = (e) => {    
-    e.preventDefault();        
-    createUserWithEmailAndPassword(auth, input.email, input.password)
-      .then((userCredential) => {
-        console.log(userCredential);
-        toast.success("Sign Up Success!", {
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    sendPasswordResetEmail(auth, input.email)
+      .then(() => {
+        console.log("Password Reset Link Sent!");
+        toast.success("Password Reset Link Sent!", {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -32,7 +32,7 @@ export default function SignUp() {
       })
       .catch((error) => {
         console.log(error);
-        toast.warn("Email alredy used or invalid!", {
+        toast.warn("Email invalid!", {
           position: "top-center",
           autoClose: 2000,
           hideProgressBar: false,
@@ -42,9 +42,8 @@ export default function SignUp() {
           progress: undefined,
           theme: "colored",
         });
-      });              
-    document.getElementById("emailField").value = "";    
-    document.getElementById("passwordField").value = "";    
+      });
+    setInput({ email: "" });
   };
 
   return (
@@ -53,7 +52,7 @@ export default function SignUp() {
       data-netlify-recaptcha="true"
       data-netlify="true"
     >
-      <h3>Sign Up</h3>
+      <h3>Reset Password</h3>
       <div className="mb-3">
         <input
           type="email"
@@ -62,30 +61,13 @@ export default function SignUp() {
           value={input.email}
           onChange={(e) =>
             setInput({ ...input, [e.target.name]: e.target.value })
-          }
+          }          
           className="form-control"
-          placeholder="Enter email"
-        />
-      </div>      
-
-      <div className="mb-3">
-        <input
-          type="password"
-          name="password"
-          id="passwordField"
-          pattern="(?=.*\d)(?=.*?[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          required
-          title="Password harus menggunakan kombinasi huruf besar, huruf kecil, angka, symbol, dan minimal sebanyak 8 karakter."
-          value={input.password}
-          onChange={(e) =>
-            setInput({ ...input, [e.target.name]: e.target.value })
-          }
-          className="form-control"
-          placeholder="Enter password"
+          placeholder="Enter Email"
         />
       </div>
       <div className="col d-flex justify-content-center captcha-padding">
-        <ReCAPTCHA          
+        <ReCAPTCHA
           sitekey={process.env.REACT_APP_SITE_KEY}
           onChange={enableBtn}
         />
@@ -96,20 +78,17 @@ export default function SignUp() {
             <button
               className="btn btn-dark w-50"
               type="submit"
-              id="signUpBtn"
+              id="requestBtn"
               disabled
             >
-              Sign Up
+              Send Request
             </button>
           </div>
         </div>
-      </div>
-      <div className="already-registered-padding">
-        <p className="text-right col text-center">
-          Already registered <a href="/sign-in">sign in?</a>
-        </p>
       </div>
       <ToastContainer />
     </form>
   );
 }
+
+export default ResetPassword;
